@@ -158,7 +158,7 @@ namespace RPG
 
         public void criarPersonagem()
         {
-            Console.WriteLine("Nome do personagem:");
+            Console.Write("Nome do personagem: ");
             Nome = Console.ReadLine();
             Pv = 5;
             Dano = 1;
@@ -166,6 +166,7 @@ namespace RPG
             Console.WriteLine("Selecione a sua Classe:");
             Console.WriteLine("1 - Paladino");
             Console.WriteLine("2 - Mago");
+            Console.WriteLine();
             string escolha = Console.ReadLine();
 
             switch (escolha)

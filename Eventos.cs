@@ -22,6 +22,7 @@ namespace RPG
             Console.WriteLine("Iniciando o turno do combate...");
             Console.WriteLine();
             Console.ReadKey();
+            Console.Clear();
 
             do
             {
@@ -37,7 +38,9 @@ namespace RPG
 
                 if (rollPersonagem > rollInimigo)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Você obteve sucesso, o que deseja fazer?");
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine($"1 - Atacar (Casusa {personagemDano}) de dano.");
                     Console.WriteLine($"2 - Usar Habilidade.");
                     Console.WriteLine();
@@ -51,7 +54,9 @@ namespace RPG
                                 Console.WriteLine();
                                 inimigoPv = inimigoPv - personagemDano;
                                 Console.WriteLine($"Resultado desse turno: Seu PV é: {personagemPv}, e seu inimigo {inimigoPv} ");
+                                Console.WriteLine();
                                 Console.WriteLine("Pressione alguma tecla para continuar...");
+                                Console.WriteLine();
                                 Console.ReadKey();
                                 Console.Clear();
                                 break;
@@ -111,10 +116,12 @@ namespace RPG
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Seu inimigo obteve sucesso. Ele lhe ataca e causa 1 de dano!");
+                    Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine();
                     personagemPv = personagemPv - inimigoDano;
                     Console.WriteLine($"Resultado desse turno: Seu PV é: {personagemPv}, e seu inimigo {inimigoPv} ");
+                    Console.WriteLine();
                     Console.WriteLine("Pressione alguma tecla para continuar...");
                     Console.WriteLine();
                     Console.ReadKey();
