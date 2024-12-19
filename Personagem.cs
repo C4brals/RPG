@@ -2,90 +2,213 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.PortableExecutable;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RPG
 {
     internal class Personagem
     {
-        #region Declaração de Variáveis
-        //declaração de variáveis
-        public string nomePersonagem;
-        public int curaCelere = 3, laminaDaRedencao = 2, pocaoCura = 2, dano = 1, pvPersonagem = 5;
-        bool hab1 = true, hab2 = true, boolPocaoCura = false;
-        #endregion
+        //Declaração de Variáveis
+        private string _nome { get; set; }
+        private string _classe { get; set; }
+        private int _dano { get; set; }
+        private int _pv { get; set; }
+        private int _habilidadePaladino { get; set; }
+        private int _habilidadeMago { get; set; }
+        private bool _statusHabilidade {  get; set; }
+
+        //Propriedades
+        public string Nome
+        {
+            get
+            {
+                return _nome;
+            }
+            set
+            {
+                _nome = value;
+            }
+        }
+        public string Classe
+        {
+            get
+            {
+                return _classe;
+            }
+            set
+            {
+                _classe = value;
+            }
+        }
+        public int Dano
+        {
+            get
+            {
+                return _dano;
+            }
+            set
+            {
+                _dano = value;
+            }
+        }
+        public int Pv
+        {
+            get
+            {
+                return _pv;
+            }
+            set
+            {
+                _pv = value;
+            }
+        }
+        public int HabilidadePaladino
+        {
+            get
+            {
+                return _habilidadePaladino;
+            }
+            set
+            {
+                _habilidadePaladino = value;
+            }
+        }
+        public int HabilidadeMago
+        {
+            get
+            {
+                return _habilidadeMago;
+            }
+            set
+            {
+                _habilidadeMago = value;
+            }
+        }
+        public bool StatusHabilidade
+        {
+            get
+            {
+                return _statusHabilidade;
+            }
+            set
+            {
+                _statusHabilidade = value;
+            }
+        }
+
+        //Métodos
+        public void ataque()
+        {
+
+        }
 
         public void status()
         {
-            Console.WriteLine($"------ Situação atual do seu Personagem ------");
-            Console.WriteLine();
-            Console.WriteLine($"Vida (PV): {pvPersonagem}");
-            Console.WriteLine();
+            bool escolha;
+            string opcao;
+            escolha = false;
 
-            //verificação de inventário
-            Console.WriteLine("------ Inventário ------");
-            if (hab1 == true)
+            do
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Cura Célere");
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"Selecione o que deseja fazer:");
+                Console.WriteLine();
+                Console.WriteLine("1 - Proceder para próxima etapa. | 2 - Mostrar seus status.");
+                Console.WriteLine();
+                opcao = Console.ReadLine();
+
+                switch (opcao)
+                {
+                    case "1":
+                        {
+                            escolha = true;
+                            break;
+                        }
+                    case "2":
+                        {                            
+                            Console.WriteLine($"Situação atual de {Nome} - Classe {Classe}: Pontos de Vida (PV): {Pv}, Dano: {Dano}");
+                            if (StatusHabilidade == true)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("Habilidade disponível.");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Habilidade indisponível.");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                            Console.WriteLine();
+                            break;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("Favor selecionar uma opção válida");
+                            Console.WriteLine();
+                            break;
+                        }
+                        
+                }
             }
-            else
+            while (escolha == false);
+        }
+
+        public void criarPersonagem()
+        {
+            Console.WriteLine("Nome do personagem:");
+            Nome = Console.ReadLine();
+            Pv = 5;
+            Dano = 1;
+
+            Console.WriteLine("Selecione a sua Classe:");
+            Console.WriteLine("1 - Paladino");
+            Console.WriteLine("2 - Mago");
+            string escolha = Console.ReadLine();
+
+            switch (escolha)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Cura Célere");
-                Console.ForegroundColor = ConsoleColor.White;
+                case "1":
+                    {
+                        Console.WriteLine("Você selecionou a classe PALADINO.");
+                        Console.WriteLine("Sua habilidade é LUZ CELESTE: Recupere 3 do seu PV");
+                        Console.WriteLine();
+                        HabilidadePaladino = 3;
+                        Classe = "Paladino";
+                        StatusHabilidade = true;
+                        break;
+                    }
+                case "2":
+                    {
+                        Console.WriteLine("Você selecionou a classe MAGO.");
+                        Console.WriteLine("Sua habilidade é BOLA DE FOGO: Cause 3 de dano ao PV inimigo.");
+                        Console.WriteLine();
+                        HabilidadeMago = 3;
+                        Classe = "Mago";
+                        StatusHabilidade = true;
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Favor selecionar uma classe!");
+                        Console.WriteLine();
+                        break;
+                    }
             }
-            if (hab2 == true)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Lâmina da Redenção");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Lâmina da Redenção");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            if (boolPocaoCura == true)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Poção de Cura");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Poção de Cura");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            Console.WriteLine();
-            Console.WriteLine("Habilidade 1 - Cura célere: Recupere 3 de PV.");
-            Console.WriteLine("Habilidade 2 - Lâmina da Redenção: Causa 2 de dano ao PV inimigo");
-            Console.WriteLine("Poção de Cura: Recupera 2 de PV");
-            Console.WriteLine();
-            Console.WriteLine("Pressione uma tecla para continuar...");
-            Console.WriteLine();
-            Console.ReadKey();
+        }
+
+        public void vantagem()
+        {
+
+        }
+
+        public void desvantagem()
+        {
 
         }
         
-        public void criarPersonagem()
-        {
-            Console.Write("Nome do Personagem:");
-            nomePersonagem = Console.ReadLine();
-            Console.WriteLine();
-            Console.WriteLine($"Olá {nomePersonagem} Você iniciará a campanha com duas habilidades:");
-            Console.WriteLine();
-            Console.WriteLine("Habilidade 1 - Cura célere: Recupere 3 de PV.");
-            Console.WriteLine("Habilidade 2 - Lâmina da Redenção: Causa 2 de dano ao PV inimigo");
-            Console.WriteLine();
-            Console.WriteLine("Pressione uma tecla para continuar...");
-            Console.ReadKey();
-            Console.WriteLine();
 
-        }      
     }
 }
